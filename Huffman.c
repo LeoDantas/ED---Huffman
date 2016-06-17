@@ -191,19 +191,29 @@ void criaArvore(tFila *F){
              tNo *novoNo;
 
 	while(F->tam > 1){
-                        novoNo = malloc(sizeof(tNo));
+                         novoNo = malloc(sizeof(tNo));
 
 		novaFreq = p->freq;
                           novoNo->esq = p;
+                          p->dir = NULL;
+                          p->esq = NULL;
+                          //printf("%d\n", p->freq);
 		retira(F, &x);
+                          p = p->prox;
 
                           novoNo->dir = p;
 		novaFreq += p->freq;
+                          p->dir = NULL;
+                          p->esq = NULL;
+                          //printf("%d\n", p->freq);
 		retira(F, &y);
+                          p = p->prox;
 
                           novoNo->freq = novaFreq;
                           novoNo->prox = NULL;
-                      
+                          printf("%d\n", novoNo->freq);
+
+
                             if (vazia(*F)){    /*Inserção em fila vazia */
                                 F->inicio = novoNo;
                                 F->fim = novoNo;
