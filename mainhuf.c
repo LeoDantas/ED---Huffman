@@ -13,6 +13,7 @@ int main()
     int i = 0;
     char *dado;
     char ch;
+    char x;
 
     cria(&minhaFila);
 
@@ -34,6 +35,7 @@ int main()
     }
 
     ordena(&minhaFila);
-
     exibeFila(&minhaFila);
+    criaArvore(&minhaFila);
+    exibeArv(minhaFila);
 }
