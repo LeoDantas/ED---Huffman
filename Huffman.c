@@ -2,14 +2,12 @@
 #include <stdlib.h>
 #include "Huffman.h"
 
-/** Cria uma Fila  */
 void cria (tFila *F) {
 	F->inicio = NULL;
 	F->fim = NULL;
 	F->tam = 0;
 }
 
-/**Verifica se a Fila está vazia */
 int vazia (tFila F) {
 	if (F.tam == 0)
 		return 1;
@@ -17,14 +15,10 @@ int vazia (tFila F) {
 		return 0;
 }
 
-/** Obtém o tamanho da Fila */
 int tamanho (tFila F) {
 	return F.tam;
 }
 
-/** Consulta o elemento do início da fila
-    Retorna 0 se a fila estiver vazia, 1 caso contrário
-    O parâmetro elem recebe o elemento início */
 int primeiro (tFila F, char *elem) {
 	if (vazia(F))
 		return 0; /*Erro: Fila vazia */
@@ -33,8 +27,6 @@ int primeiro (tFila F, char *elem) {
 	return 1;
 }
 
-/** Insere um elemento no fim de uma fila
-    Retorna 0 se a mem. for insuficiente, 1 caso contrário*/
 int insere (tFila *F, char valor) {
 	tNo *novoNo;
 	novoNo = malloc(sizeof(tNo));
@@ -47,7 +39,7 @@ int insere (tFila *F, char valor) {
         novoNo->dir = NULL;
         novoNo->esq = NULL;
 
-    if (vazia(*F)){    /*Inserção em fila vazia */
+    if (vazia(*F)){    /*InserÃ§Ã£o em fila vazia */
         F->inicio = novoNo;
         F->fim = novoNo;
     }
@@ -62,9 +54,6 @@ int insere (tFila *F, char valor) {
 
 
 
-/**Retira o elemento do início da fila
-    Retorna 0 se a fila estiver vazia, 1 caso contrário
-    O parâmetro valor irá receber o elemento retirado */
 int retira (tFila *F, char *valor) {
 	tNo *p;
  	char res;
@@ -81,7 +70,7 @@ int retira (tFila *F, char *valor) {
 	p = F->inicio;
 	F->inicio = p->prox;
 	F->tam--;
-	
+
 
 	return (1);
 }
@@ -104,26 +93,25 @@ void exibeFila(tFila *F){
 void exibeArvore(tFila F) {
     tNo *p;
     p = F.inicio;
-
-    if (vazia(F))
-        return ;
-
-    while(p != NULL){
-        printf("Elemento: %c | Frequencia: %d\n",p->dado, p->freq);
-        p = p->esq;
-
-    }
-
-    while(p != NULL){
-        printf("Elemento: %c | Frequencia: %d\n",p->dado, p->freq);
-        p = p->dir;
-    }
-
+    printarv(*p);
 
  }
-		
 
+void printarv(tNo b){
 
+   if(b.dado!= NULL)
+        printf("[folha] dado = %c| Frequencia %d\n",b.dado,b.freq);
+        //else
+        //printf("[NO] frequencia %d\n",b.freq);
+    if(b.dir!=NULL){
+        printf("dir->");
+        printarv(*b.dir);
+        }
+    if(b.esq!=NULL){
+        printf("esq->");
+        printarv(*b.esq);
+        }
+}
 
 int verificaFila(tFila F, char dado){
 	tNo *p;
@@ -162,7 +150,7 @@ int insertionSortFreq(struct no *V, int N){
 }
 
 void ordena(tFila *F){
-	int i = 0, x = 0;	
+	int i = 0, x = 0;
 	struct no array[F->tam];
 	tNo *p;
 	p = F->inicio;
@@ -174,7 +162,7 @@ void ordena(tFila *F){
     }
 
     insertionSortFreq(array, tamanho(*F));
-	    
+
     p = F->inicio;
     while(x < i){
         p->dado = array[x].dado;
@@ -192,34 +180,28 @@ void criaArvore(tFila *F){
              tNo *novoNo;
 
 	while(F->tam > 1){
-                         novoNo = malloc(sizeof(tNo));
-
-		novaFreq = p->freq;
-                          novoNo->esq = p;
-                          //printf("%d\n", p->freq);
-		retira(F, &x);
-                          p = p->prox;
-
-                          novoNo->dir = p;
-		novaFreq += p->freq;
-                          //printf("%d\n", p->freq);
-		retira(F, &y);
-                          p = p->prox;
-
-                          novoNo->freq = novaFreq;
-                          novoNo->prox = NULL;
-                          printf("%d\n", novoNo->freq);
-
-
-                            if (vazia(*F)){    /*Inserção em fila vazia */
-                                F->inicio = novoNo;
-                                F->fim = novoNo;
-                            }
-                            else {
-                                (F->fim)->prox = novoNo; /* liga com a fila */
-                                F->fim = novoNo; /* atualiza o novo fim */
-                            }
-                            F->tam++;
+            novoNo = malloc(sizeof(tNo));
+            novaFreq = p->freq;
+            novoNo->esq = p;
+            retira(F, &x);
+            p = p->prox;
+            novoNo->dir = p;
+            novaFreq += p->freq;
+            retira(F, &y);
+            p = p->prox;
+            novoNo->freq = novaFreq;
+            novoNo->prox = NULL;
+            novoNo->dado= NULL;
+            if (vazia(*F)){    /*InserÃ§Ã£o em fila vazia */
+               F->inicio = novoNo;
+               F->fim = novoNo;
+               }
+            else {
+               (F->fim)->prox = novoNo; /* liga com a fila */
+                F->fim = novoNo; /* atualiza o novo fim */
+                    }
+           F->tam++;
 	}
 }
+
 
