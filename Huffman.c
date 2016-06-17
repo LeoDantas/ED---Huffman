@@ -44,6 +44,8 @@ int insere (tFila *F, char valor) {
 
 	novoNo->dado = valor;
 	novoNo->prox = NULL;
+        novoNo->dir = NULL;
+        novoNo->esq = NULL;
 
     if (vazia(*F)){    /*Inserção em fila vazia */
         F->inicio = novoNo;
@@ -53,10 +55,10 @@ int insere (tFila *F, char valor) {
 		(F->fim)->prox = novoNo; /* liga com a fila */
 		F->fim = novoNo; /* atualiza o novo fim */
     }
+
     F->tam++;
     return 1;
 }
-
 
 
 
@@ -99,26 +101,25 @@ void exibeFila(tFila *F){
 	printf("Tamanho: %d\n", F->tam);
 }
 
-void exibeArv(tFila F) {
-	tNo *p;
-	p = F.inicio;
+void exibeArvore(tFila F) {
+    tNo *p;
+    p = F.inicio;
 
-	if (vazia(F))
-		return ;
+    if (vazia(F))
+        return ;
 
-	
+    while(p != NULL){
+        printf("Elemento: %c | Frequencia: %d\n",p->dado, p->freq);
+        p = p->esq;
 
-	while(p->esq != NULL){
-		printf("Elemento: %c | Frequencia: %d\n",p->dado, p->freq);
-		p = p->esq;
-		
-}
+    }
 
- 	while(p->dir != NULL){
- 		printf("Elemento: %c | Frequencia: %d\n",p->dado, p->freq);
- 		p = p->dir;
- 	
- 	}
+    while(p != NULL){
+        printf("Elemento: %c | Frequencia: %d\n",p->dado, p->freq);
+        p = p->dir;
+    }
+
+
  }
 		
 
@@ -195,16 +196,12 @@ void criaArvore(tFila *F){
 
 		novaFreq = p->freq;
                           novoNo->esq = p;
-                          p->dir = NULL;
-                          p->esq = NULL;
                           //printf("%d\n", p->freq);
 		retira(F, &x);
                           p = p->prox;
 
                           novoNo->dir = p;
 		novaFreq += p->freq;
-                          p->dir = NULL;
-                          p->esq = NULL;
                           //printf("%d\n", p->freq);
 		retira(F, &y);
                           p = p->prox;
@@ -225,3 +222,4 @@ void criaArvore(tFila *F){
                             F->tam++;
 	}
 }
+
