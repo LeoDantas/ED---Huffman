@@ -33,9 +33,11 @@ int main()
             }
         }
     }
-
+    printf("\n");
     ordena(&minhaFila);
     exibeFila(&minhaFila);
     criaArvore(&minhaFila);
-    exibeArv(minhaFila);
+    //exibeFila(&minhaFila);
+
+    exibeArvore(minhaFila);
 }
