@@ -6,6 +6,8 @@ typedef struct no {
 	char dado;
 	int freq;
 	struct  no *prox;
+	struct no *dir;
+	struct no *esq;
 } tNo;
 
 typedef struct fila {
@@ -24,6 +26,6 @@ int retira(tFila *F, char *dado);
 void exibeFila(tFila *F);
 int verificaFila(tFila F, char dado);
 void ordena(tFila *F);
-
+void exibeArv(tFila F); 
 
 #endif // HUFFMAN_H_INCLUDED
