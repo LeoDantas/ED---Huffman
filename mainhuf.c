@@ -40,4 +40,5 @@ int main()
     //exibeFila(&minhaFila);
 
     exibeArvore(minhaFila);
+    exibeCod(minhaFila); 
 }
