@@ -5,6 +5,7 @@
 typedef struct no {
 	char dado;
 	int freq;
+	char bin[256];
 	struct  no *prox;
 	struct no *dir;
 	struct no *esq;
@@ -17,6 +18,8 @@ typedef struct fila {
 } tFila;       /* tipo fila */
 
 void cria (tFila *F);
+void criaArvore(tFila *F);
+void exibeArvore(tFila F);
 int vazia (tFila F);
 int tamanho(tFila F);
 int primeiro (tFila F, char *dado);
@@ -27,5 +30,8 @@ void exibeFila(tFila *F);
 int verificaFila(tFila F, char dado);
 void ordena(tFila *F);
 void exibeArv(tFila F); 
+void printarv(tNo *b);
+void codifica(tNo *b);
+void exibeCod(tFila F); 
 
 #endif // HUFFMAN_H_INCLUDED
