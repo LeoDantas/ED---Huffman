@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Huffman.h"
 
 void cria (tFila *F) {
@@ -77,6 +78,8 @@ int retira (tFila *F, char *valor) {
 
 //LISTA ED
 
+
+
 void exibeFila(tFila *F){
 	tNo *p;
 	int i;
@@ -90,28 +93,29 @@ void exibeFila(tFila *F){
 	printf("Tamanho: %d\n", F->tam);
 }
 
+void printarv(tNo *b){
+
+   if(b == NULL)
+        return;
+    
+    printf("[folha] dado = %c| Frequencia %d\n" ,b->dado,b->freq);
+    if(b->dir!=NULL){
+        printf("dir->");
+        printarv(b->dir);
+    }
+    if(b->esq!=NULL){
+        printf("esq->");
+        printarv(b->esq);
+        }
+}
+
 void exibeArvore(tFila F) {
     tNo *p;
     p = F.inicio;
-    printarv(*p);
+    printarv(p);
 
  }
 
-void printarv(tNo b){
-
-   if(b.dado!= NULL)
-        printf("[folha] dado = %c| Frequencia %d\n",b.dado,b.freq);
-        //else
-        //printf("[NO] frequencia %d\n",b.freq);
-    if(b.dir!=NULL){
-        printf("dir->");
-        printarv(*b.dir);
-        }
-    if(b.esq!=NULL){
-        printf("esq->");
-        printarv(*b.esq);
-        }
-}
 
 int verificaFila(tFila F, char dado){
 	tNo *p;
@@ -191,7 +195,7 @@ void criaArvore(tFila *F){
             p = p->prox;
             novoNo->freq = novaFreq;
             novoNo->prox = NULL;
-            novoNo->dado= NULL;
+            novoNo->dado= 0;
             if (vazia(*F)){    /*Inserção em fila vazia */
                F->inicio = novoNo;
                F->fim = novoNo;
@@ -203,3 +207,31 @@ void criaArvore(tFila *F){
            F->tam++;
 	}
 }
+
+
+void codifica(tNo *b){
+	
+
+	if (b == NULL)
+		return;
+
+	if (b->esq != NULL)
+		strcat(b->bin,"0");
+		codifica(b->esq);
+		
+
+ 	if (b->dir != NULL)
+		strcat(b->bin,"1");
+		codifica(b->dir);
+
+	if(b->dir == NULL && b->esq == NULL){
+		printf("[folha] dado = %c | Binario: %s\n" ,b->dado, b->bin);
+	}	
+}		
+
+void exibeCod(tFila F) {
+    tNo *p;
+    p = F.inicio;
+   	codifica(p);
+
+ }
