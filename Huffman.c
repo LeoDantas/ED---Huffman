@@ -186,12 +186,10 @@ void criaArvore(tFila *F){
             novoNo = malloc(sizeof(tNo));
             novaFreq = p->freq;
             novoNo->esq = p;
-            (novoNo->esq)->bin = '0';
             retira(F, &x);
 
             p = p->prox;
             novoNo->dir = p;
-            (novoNo->dir)->bin = '1';
             novaFreq += p->freq;
             retira(F, &y);
 
