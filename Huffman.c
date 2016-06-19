@@ -175,27 +175,31 @@ void ordena(tFila *F){
 }
 
 void criaArvore(tFila *F){
-	tNo *p;
-	p = F->inicio;
-	int novaFreq;
+    tNo *p;
+    p = F->inicio;
+    int novaFreq;
              char x, y;
              tNo *novoNo;
 
-	while(F->tam > 1){
-            p->bin="0";
+    while(F->tam > 1){
+
             novoNo = malloc(sizeof(tNo));
             novaFreq = p->freq;
             novoNo->esq = p;
+            (novoNo->esq)->bin = '0';
             retira(F, &x);
+
             p = p->prox;
-            p->bin="1";
             novoNo->dir = p;
+            (novoNo->dir)->bin = '1';
             novaFreq += p->freq;
             retira(F, &y);
+
             p = p->prox;
             novoNo->freq = novaFreq;
             novoNo->prox = NULL;
-            novoNo->dado= 0;
+            novoNo->dado = 0;
+
             if (vazia(*F)){    /*Inserção em fila vazia */
                F->inicio = novoNo;
                F->fim = novoNo;
@@ -205,44 +209,46 @@ void criaArvore(tFila *F){
                 F->fim = novoNo; /* atualiza o novo fim */
                     }
            F->tam++;
-	}
+    }
 }
 
-int codifica(tNo *b,char *ch,int i){
+void codifica(tNo *b, tFila F, char *ch, int i){
 
-	if (b == NULL)
-		return 0;
+    if (b == NULL){
+        b == F.inicio;
+    }
 
-	if (b->esq != NULL){//todo para esquerda se nao tiver esquerda vai para direita
-            printf("0");
-            ch[i]='0';
-            i++;
-            codifica(b->esq,ch,i);
+    if (b->esq != NULL){
+        ch[i] = (b->esq)->bin;
+        i++;
+        codifica(b->esq, F, ch, i);
+    }
+    i--;
+    if (b->dir != NULL){
+        ch[i] = (b->dir)->bin;
+        i++;
+        codifica(b->dir, F, ch, i);
+    }
 
+    if(b->dir == NULL && b->esq == NULL){
+        printf("dado %c | CodigoBinario: ", b->dado);
+        int x = 0;
+
+        while(x <= i){
+            printf("%c", ch[x]);
+            x++;
         }
+        printf("\n");
 
- 	else if (b->dir != NULL){
-            printf("1");
-            ch[i]='1';
-            i++;
-            codifica(b->dir,ch,i);
-		}
-
-
-	if(b->dir == NULL && b->esq == NULL){
-		printf("[folha] dado = %c | Binario: %s\n" ,b->dado,ch);
-		b=NULL;//nao esta apagando o ultima folha
-	}
-
-	return 1;
+        b = NULL;
+        i--;
+    }
 }
 
-void exibeCod(tFila *F) {
+void exibeCod(tFila F) {
     tNo *p;
-    p = F->inicio;
-    char ch[256];
-    int i=0,r;
-    while(r!=0)// quando nao existir no na arvore encerra
-   	r=codifica(p,ch,i);
-
- }
+    p = F.inicio;
+    char ch[8];
+    int i = 0;
+    codifica(p, F, ch, i);
+}
