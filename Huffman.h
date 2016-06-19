@@ -5,7 +5,7 @@
 typedef struct no {
 	char dado;
 	int freq;
-	char bin;
+	char bin[8];
 	struct  no *prox;
 	struct no *dir;
 	struct no *esq;
