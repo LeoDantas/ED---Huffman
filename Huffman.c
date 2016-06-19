@@ -215,7 +215,7 @@ void criaArvore(tFila *F){
 void codifica(tNo *b, tFila F, char *ch, int i){
 
     if (b == NULL){
-        b == F.inicio;
+        return;
     }
 
     if (b->esq != NULL){
