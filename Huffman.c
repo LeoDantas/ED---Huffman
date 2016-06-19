@@ -219,26 +219,25 @@ void codifica(tNo *b, tFila F, char *ch, int i){
     }
 
     if (b->esq != NULL){
-        ch[i] = (b->esq)->bin;
+        ch[i] = '0';
         i++;
         codifica(b->esq, F, ch, i);
     }
     i--;
     if (b->dir != NULL){
-        ch[i] = (b->dir)->bin;
+        ch[i] = '1';
         i++;
         codifica(b->dir, F, ch, i);
     }
 
     if(b->dir == NULL && b->esq == NULL){
-        printf("dado %c | CodigoBinario: ", b->dado);
         int x = 0;
 
         while(x <= i){
-            printf("%c", ch[x]);
+            b->bin[x] = ch[x];
             x++;
         }
-        printf("\n");
+         printf("dado %c | CodigoBinario: %s\n", b->dado, b->bin);
 
         b = NULL;
         i--;
