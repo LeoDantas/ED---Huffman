@@ -210,7 +210,7 @@ void criaArvore(tFila *F){
     }
 }
 
-void codifica(tNo *b, tFila F, char *ch, int i){
+void codifica(tNo *b, tFila F, char *ch, int i, char *codigo){
 
     if (b == NULL){
         return;
@@ -219,13 +219,13 @@ void codifica(tNo *b, tFila F, char *ch, int i){
     if (b->esq != NULL){
         ch[i] = '0';
         i++;
-        codifica(b->esq, F, ch, i);
+        codifica(b->esq, F, ch, i, codigo);
     }
     i--;
     if (b->dir != NULL){
         ch[i] = '1';
         i++;
-        codifica(b->dir, F, ch, i);
+        codifica(b->dir, F, ch, i, codigo);
     }
 
     if(b->dir == NULL && b->esq == NULL){
@@ -236,16 +236,20 @@ void codifica(tNo *b, tFila F, char *ch, int i){
             x++;
         }
          printf("dado %c | CodigoBinario: %s\n", b->dado, b->bin);
-
+         strcat(codigo, b->bin);
         b = NULL;
         i--;
     }
 }
 
 void exibeCod(tFila F) {
+
     tNo *p;
     p = F.inicio;
     char ch[8];
+    char codigo[0];
     int i = 0;
-    codifica(p, F, ch, i);
+    codifica(p, F, ch, i, codigo);
+
+    printf("codigo: %s\n", codigo);
 }
