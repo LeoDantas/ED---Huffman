@@ -210,7 +210,6 @@ void criaArvore(tFila *F){
     }
 }
 
-
 void codifica(tNo *b, char *ch, int i){
 
     if (b == NULL){
@@ -239,50 +238,43 @@ void codifica(tNo *b, char *ch, int i){
 
         printf("dado %c | CodigoBinario: %s\n", b->dado, b->bin);
 
-        //strcat(codigo, b->bin);
-
         b = NULL;
         i--;
     }
 }
 
-void busca(tNo *b, tFila F, char *palavra, int i, char *arr, int k){
-    printf("%c\n", b->dado);
-    if (b == NULL){
-        printf("ta errado!!");
-        return;
-    }
+tNo *busca(tNo *b, int dado) {
 
-    if (b->esq != NULL){
-        busca(b->esq, F, palavra, i, arr, k);
-    }
+    tNo *achou;
 
-    if (b->dir != NULL){
-        busca(b->dir, F, palavra, i, arr, k);
-    }
+    if (b == NULL)
+        return NULL; // Arvore Vazia
 
-    if(b->dado == palavra[k]){
-        k++;
-        int j = 0;
-        printf("i:%d j:%d k:%d letra: %c\n", i, j, k, palavra[k]);
-        while(sizeof(b->bin) > j){
-        arr[i] = b->bin[j];
-        j++;
-        i++;
-        }
-        printf("i:%d j:%d k:%d\n", i, j, k);
-        b = F.inicio;
-    }
+    if(b->dado == dado)
+        return b; //Elem. encontrado na raiz
+
+    achou = busca(b->esq, dado);
+
+    if (achou == NULL)
+        achou = busca(b->dir, dado);
+
+    return achou;
+
 }
 
-void exibeCod(tFila F, char *palavra) {
+void exibeCod(tFila F, char *palavra, int x) {
 
-    tNo *p;
+    tNo *p, *b;
     p = F.inicio;
-    char ch[8], letra, arr[50];
+    char ch[8], letra, arr[29];
     int i = 0, j =0, k = 0;
     codifica(p, ch, i);
     i = 0;
-    busca(p, F, palavra, i, arr, k);
+    while(x > i){
+        b = busca(p, palavra[i]);
+        printf("%s\n", b->bin);
+        strcat(arr, b->bin);
+        i++;
+    }
     printf("codigo: %s\n", arr);
 }
