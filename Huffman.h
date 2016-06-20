@@ -32,6 +32,6 @@ void ordena(tFila *F);
 void exibeArv(tFila F);
 void printarv(tNo *b);
 //void codifica(tNo *b);
-void exibeCod(tFila *F);
+void exibeCod(tFila F, char *palavra);
 
 #endif // HUFFMAN_H_INCLUDED
