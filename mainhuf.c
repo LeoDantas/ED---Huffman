@@ -47,5 +47,5 @@ int main()
     exibeArvore(minhaFila);
     printf("\n\n");
 
-    exibeCod(minhaFila, palavra);
+    exibeCod(minhaFila, palavra, i);
 }
