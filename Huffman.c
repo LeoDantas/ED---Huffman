@@ -210,7 +210,8 @@ void criaArvore(tFila *F){
     }
 }
 
-void codifica(tNo *b, tFila F, char *ch, int i, char *codigo){
+
+void codifica(tNo *b, char *ch, int i){
 
     if (b == NULL){
         return;
@@ -219,13 +220,13 @@ void codifica(tNo *b, tFila F, char *ch, int i, char *codigo){
     if (b->esq != NULL){
         ch[i] = '0';
         i++;
-        codifica(b->esq, F, ch, i, codigo);
+        codifica(b->esq, ch, i);
     }
     i--;
     if (b->dir != NULL){
         ch[i] = '1';
         i++;
-        codifica(b->dir, F, ch, i, codigo);
+        codifica(b->dir, ch, i);
     }
 
     if(b->dir == NULL && b->esq == NULL){
@@ -235,21 +236,53 @@ void codifica(tNo *b, tFila F, char *ch, int i, char *codigo){
             b->bin[x] = ch[x];
             x++;
         }
-         printf("dado %c | CodigoBinario: %s\n", b->dado, b->bin);
-         strcat(codigo, b->bin);
+
+        printf("dado %c | CodigoBinario: %s\n", b->dado, b->bin);
+
+        //strcat(codigo, b->bin);
+
         b = NULL;
         i--;
     }
 }
 
-void exibeCod(tFila F) {
+void busca(tNo *b, tFila F, char *palavra, int i, char *arr, int k){
+    printf("%c\n", b->dado);
+    if (b == NULL){
+        printf("ta errado!!");
+        return;
+    }
+
+    if (b->esq != NULL){
+        busca(b->esq, F, palavra, i, arr, k);
+    }
+
+    if (b->dir != NULL){
+        busca(b->dir, F, palavra, i, arr, k);
+    }
+
+    if(b->dado == palavra[k]){
+        k++;
+        int j = 0;
+        printf("i:%d j:%d k:%d letra: %c\n", i, j, k, palavra[k]);
+        while(sizeof(b->bin) > j){
+        arr[i] = b->bin[j];
+        j++;
+        i++;
+        }
+        printf("i:%d j:%d k:%d\n", i, j, k);
+        b = F.inicio;
+    }
+}
+
+void exibeCod(tFila F, char *palavra) {
 
     tNo *p;
     p = F.inicio;
-    char ch[8];
-    char codigo[0];
-    int i = 0;
-    codifica(p, F, ch, i, codigo);
-
-    printf("codigo: %s\n", codigo);
+    char ch[8], letra, arr[50];
+    int i = 0, j =0, k = 0;
+    codifica(p, ch, i);
+    i = 0;
+    busca(p, F, palavra, i, arr, k);
+    printf("codigo: %s\n", arr);
 }
