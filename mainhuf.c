@@ -10,10 +10,11 @@
 int main()
 {
     tFila minhaFila;
-    int i = 0,cont=0;
+    int i = 0;
     char *dado;
     char ch;
-    char x,frase[200];
+    char x;
+    char palavra[256];
 
     cria(&minhaFila);
 
@@ -25,9 +26,8 @@ int main()
         return 0;
     }else{
         while((ch=fgetc(arq)) != EOF){
-            printf("%c", ch);
-            frase[cont]=ch;
-            cont++;
+            palavra[i] = ch;
+            i++;
             if(!verificaFila(minhaFila, ch)){
                 if(!insere(&minhaFila, ch)){
                 }
@@ -35,13 +35,17 @@ int main()
             }
         }
     }
-    printf("%c",'1');
+
+    printf("%s\n\n", palavra);
+
     printf("\n");
     ordena(&minhaFila);
     exibeFila(&minhaFila);
+    printf("\n\n");
     criaArvore(&minhaFila);
-    //exibeFila(&minhaFila);
 
     exibeArvore(minhaFila);
-    exibeCod(&minhaFila);
+    printf("\n\n");
+
+    exibeCod(minhaFila, palavra);
 }
